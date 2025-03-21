@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.class
+.env
+*.db
+*.sqlite3
+*.log
+.DS_Store
+venv/
+.venv/
+.idea/
+.vscode/
+tg_analytics_session*
