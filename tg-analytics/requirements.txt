@@ -1,0 +1,26 @@
+# Основные библиотеки
+fastapi==0.104.1
+uvicorn==0.23.2
+pydantic==2.4.2
+pydantic-settings==2.0.3
+python-dotenv==1.0.0
+sqlalchemy==2.0.23
+
+# Telegram API
+python-telegram-bot==20.6
+telethon==1.30.3
+
+# LLM интеграция
+openai==1.2.4
+
+# Аналитика и обработка данных
+pandas==2.1.1
+numpy==1.26.1
+matplotlib==3.8.1
+plotly==5.18.0
+
+# Инструменты разработки
+pytest==7.4.3
+black==23.10.1
+isort==5.12.0
+flake8==6.1.0
