@@ -203,23 +203,31 @@ class TelegramDataCollector:
         return comments
 
     async def _save_reactions(
-        self, 
-        message: Message, 
-        entity: Union[Post, Comment],
-        db_session
-    ):
-        """Сохранение реакций к сообщению"""
-        if hasattr(message, "reactions") and message.reactions:
-            reactions = message.reactions
-            if isinstance(reactions, MessageReactions):
-                for reaction in reactions.results:
-                    reaction_model = Reaction(
-                        reaction_type=reaction.reaction,
-                        count=reaction.count,
-                        post_id=entity.id if isinstance(entity, Post) else None,
-                        comment_id=entity.id if isinstance(entity, Comment) else None,
-                    )
-                    db_session.add(reaction_model)
+    self, 
+    message: Message, 
+    entity: Union[Post, Comment],
+    db_session
+):
+    """Сохранение реакций к сообщению"""
+    if hasattr(message, "reactions") and message.reactions:
+        reactions = message.reactions
+        if isinstance(reactions, MessageReactions):
+            for reaction in reactions.results:
+                # Преобразуем тип реакции в строковое представление
+                if hasattr(reaction.reaction, "emoticon"):
+                    reaction_type = reaction.reaction.emoticon
+                elif hasattr(reaction.reaction, "document_id"):
+                    reaction_type = f"custom_{reaction.reaction.document_id}"
+                else:
+                    reaction_type = str(reaction.reaction)
+                
+                reaction_model = Reaction(
+                    reaction_type=reaction_type,
+                    count=reaction.count,
+                    post_id=entity.id if isinstance(entity, Post) else None,
+                    comment_id=entity.id if isinstance(entity, Comment) else None,
+                )
+                db_session.add(reaction_model)
 
 
 async def main():
